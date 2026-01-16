@@ -1,55 +1,65 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - hishenperera_portfolio</title>
-    <script type="importmap"></script>
+    <title>@ViewData["Title"] - Hishen Perera Portfolio</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/hishenperera_portfolio.styles.css" asp-append-version="true" />
 </head>
 <body>
-
-    <!-- THEME TOGGLE -->
-    <div class="theme-toggle">
-        <button id="themeToggle">🌙</button>
-    </div>
-
-    
-
+    <!-- MODERN NAVBAR -->
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">hishenperera_portfolio</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top">
+            <div class="container">
+                <a class="navbar-brand fw-bold gradient-text" asp-controller="Home" asp-action="Index">
+                    Hishen Perera
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                        aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+
+                <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+                    <ul class="navbar-nav align-items-center">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link" asp-controller="Project" asp-action="ManageProjects">Projects</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
+                </div>
+                
+                <!-- THEME TOGGLE -->
+                <div class="theme-toggle">
+                    <button id="themeToggle" aria-label="Toggle theme">🌙</button>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - hishenperera_portfolio - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <main role="main" class="pt-5">
+        @RenderBody()
+    </main>
+
+    <!-- MODERN FOOTER -->
+    <footer class="footer-modern mt-5 py-4">
+        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+            <span>© @DateTime.Now.Year Hishen Perera</span>
+            <ul class="list-unstyled d-flex gap-3 mb-0">
+                <li><a href="https://github.com/YourGitHub" target="_blank">GitHub</a></li>
+                <li><a href="https://linkedin.com/in/YourLinkedIn" target="_blank">LinkedIn</a></li>
+                <li><a href="mailto:youremail@example.com">Email</a></li>
+            </ul>
         </div>
     </footer>
+
+    <!-- SCRIPTS -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
