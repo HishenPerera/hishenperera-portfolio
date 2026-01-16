@@ -1,8 +1,66 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model List<hishenperera_portfolio.Models.Project>
+
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- HERO -->
+<section class="hero-section">
+    <div class="container text-center">
+        <h1 class="hero-title">
+            Hi, I'm <span class="gradient-text">Hishen</span> 👋
+        </h1>
+
+        <p class="hero-subtitle">
+            Software Developer • .NET • Web Applications
+        </p>
+
+        <a href="#projects" class="btn btn-primary btn-lg mt-4">
+            View My Work
+        </a>
+    </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="projects-section">
+    <div class="container">
+
+        <h2 class="section-title text-center mb-5">
+            Featured Projects
+        </h2>
+
+        @if (!Model.Any())
+        {
+            <p class="text-center text-muted">No projects added yet.</p>
+        }
+        else
+        {
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                var project = Model[i];
+                // alternate layout
+                var isEven = i % 2 == 0;
+                <div class="project-wide-card-wrapper @(isEven ? "image-left" : "image-right")">
+                    <a href="@project.ProjectLink" target="_blank" class="project-wide-card">
+                        <div class="project-image">
+                            <img src="@project.ProjectImg"
+                                 alt="@project.ProjectName"
+                                 onerror="this.src='/images/placeholder.png'" />
+                        </div>
+
+                        <div class="project-content">
+                            <h3>@project.ProjectName</h3>
+                            <p>Click to explore the project in detail</p>
+                            <span class="view-link">View Project →</span>
+                        </div>
+                    </a>
+                </div>
+            }
+        }
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer-modern">
+    © @DateTime.Now.Year Hishen Perera · ASP.NET Core Portfolio
+</footer>

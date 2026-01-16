@@ -1,0 +1,23 @@
+@model hishenperera_portfolio.Models.Project
+
+<h2>Add New Project</h2>
+
+<form method="post">
+    <div class="mb-3">
+        <label>Project Name</label>
+        <input asp-for="ProjectName" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Image URL</label>
+        <input asp-for="ProjectImg" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Project Link</label>
+        <input asp-for="ProjectLink" class="form-control" />
+    </div>
+
+    <button class="btn btn-success">Save</button>
+    <a asp-action="ManageProjects" class="btn btn-secondary">Cancel</a>
+</form>

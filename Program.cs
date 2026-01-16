@@ -1,7 +1,10 @@
+using hishenperera_portfolio.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<ProjectService>();
 
 var app = builder.Build();
 

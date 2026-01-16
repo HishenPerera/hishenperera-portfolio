@@ -1,31 +1,203 @@
-html {
-  font-size: 14px;
+/* =========================
+   THEME VARIABLES
+========================= */
+:root {
+    --bg: #ffffff;
+    --text: #0f172a;
+    --muted: #64748b;
+    --card: #f8fafc;
+    --border: #e5e7eb;
+    --primary: #3b82f6;
+    --gradient: linear-gradient(90deg, #3b82f6, #9333ea);
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+[data-theme="dark"] {
+    --bg: #0b1220;
+    --text: #e5e7eb;
+    --muted: #94a3b8;
+    --card: #111827;
+    --border: #1f2933;
+    --primary: #2563eb;
+    --gradient: linear-gradient(90deg, #2563eb, #9333ea);
 }
 
 body {
-  margin-bottom: 60px;
+    background: var(--bg);
+    color: var(--text);
+    transition: background .3s ease, color .3s ease;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+/* =========================
+   HERO SECTION
+========================= */
+.hero-section {
+    padding: 6rem 1rem;
+    text-align: center;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+.hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: var(--muted);
+    margin-top: 1rem;
+}
+
+.gradient-text {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* =========================
+   PROJECTS SECTION
+========================= */
+.projects-section {
+    padding: 5rem 1rem;
+}
+
+.section-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+}
+
+/* Alternating project cards wrapper */
+.project-wide-card-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
+/* Grid cards */
+.project-wide-card {
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 20px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    max-width: 1100px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.08);
+    transition: transform .35s ease, box-shadow .35s ease;
+}
+
+.project-wide-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 40px 80px rgba(0,0,0,.15);
+}
+
+/* Alternating layout classes */
+.project-wide-card-wrapper.image-left .project-image {
+    order: 0;
+}
+.project-wide-card-wrapper.image-left .project-content {
+    order: 1;
+}
+.project-wide-card-wrapper.image-right .project-image {
+    order: 1;
+}
+.project-wide-card-wrapper.image-right .project-content {
+    order: 0;
+}
+
+/* Image styling */
+.project-image {
+    flex: 1 1 50%;
+    min-height: 300px;
+    overflow: hidden;
+}
+
+.project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.project-wide-card:hover img {
+    transform: scale(1.05);
+}
+
+/* Content styling */
+.project-content {
+    flex: 1 1 50%;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.project-content h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.project-content p {
+    margin: 1rem 0;
+    color: var(--muted);
+}
+
+.view-link {
+    font-weight: 600;
+    color: var(--primary);
+}
+
+/* =========================
+   FOOTER
+========================= */
+.footer-modern {
+    padding: 2rem;
+    text-align: center;
+    color: var(--muted);
+}
+
+/* =========================
+   THEME TOGGLE
+========================= */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.theme-toggle button {
+    border: none;
+    background: var(--card);
+    padding: 10px 14px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background .3s, transform .3s;
+}
+
+.theme-toggle button:hover {
+    transform: scale(1.1);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media(max-width: 992px) {
+    .project-wide-card {
+        flex-direction: column;
+    }
+
+    .project-wide-card-wrapper.image-left .project-content,
+    .project-wide-card-wrapper.image-right .project-content {
+        order: 1;
+    }
+
+    .project-wide-card-wrapper.image-left .project-image,
+    .project-wide-card-wrapper.image-right .project-image {
+        order: 0;
+    }
 }
