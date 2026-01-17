@@ -1,29 +1,52 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿document.addEventListener("DOMContentLoaded", function () {
+    const html = document.documentElement;
 
-// Write your JavaScript code.
-document.addEventListener("DOMContentLoaded", () => {
-
+    // THEME TOGGLE
     const toggleBtn = document.getElementById("themeToggle");
-    const root = document.documentElement;
+    const mobileToggleBtn = document.getElementById("mobileThemeToggle");
 
-    if (!toggleBtn) return;
+    function updateTheme(theme) {
+        html.setAttribute("data-theme", theme);
+        localStorage.setItem("theme", theme);
 
-    // Load saved theme
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) {
-        root.setAttribute("data-theme", savedTheme);
-        toggleBtn.textContent = savedTheme === "dark" ? "☀️" : "🌙";
+        document.querySelectorAll(".theme-btn .sun-icon").forEach(i => i.style.opacity = theme === "dark" ? "1" : "0");
+        document.querySelectorAll(".theme-btn .moon-icon").forEach(i => i.style.opacity = theme === "dark" ? "0" : "1");
     }
 
+    let savedTheme = localStorage.getItem("theme") || "light";
+    updateTheme(savedTheme);
+
     toggleBtn.addEventListener("click", () => {
-        const currentTheme = root.getAttribute("data-theme");
-        const newTheme = currentTheme === "dark" ? "light" : "dark";
-
-        root.setAttribute("data-theme", newTheme);
-        localStorage.setItem("theme", newTheme);
-
-        toggleBtn.textContent = newTheme === "dark" ? "☀️" : "🌙";
+        updateTheme(html.getAttribute("data-theme") === "light" ? "dark" : "light");
     });
 
+    mobileToggleBtn.addEventListener("click", () => {
+        updateTheme(html.getAttribute("data-theme") === "light" ? "dark" : "light");
+    });
+
+    // MOBILE MENU TOGGLE
+    const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    function closeMobileMenu() {
+        mobileMenu.classList.remove("show");
+        mobileMenuBtn.classList.remove("active");
+    }
+
+    mobileMenuBtn.addEventListener("click", () => {
+        mobileMenu.classList.toggle("show");
+        mobileMenuBtn.classList.toggle("active"); // rotate icon
+    });
+
+    // Close mobile menu when link or button clicked
+    mobileMenu.querySelectorAll(".nav-link, .btn-contact, .theme-btn").forEach(item => {
+        item.addEventListener("click", closeMobileMenu);
+    });
+
+    // CLOSE MOBILE MENU ON WINDOW RESIZE
+    window.addEventListener("resize", () => {
+        if (window.innerWidth >= 992) {
+            closeMobileMenu();
+        }
+    });
 });

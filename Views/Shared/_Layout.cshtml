@@ -4,6 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Hishen Perera Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/hishenperera_portfolio.styles.css" asp-append-version="true" />
@@ -11,36 +15,77 @@
 <body>
     <!-- MODERN NAVBAR -->
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top">
+        <nav class="navbar navbar-expand-lg shadow-sm fixed-top" id="mainNavbar">
             <div class="container">
+                <!-- BRAND / LOGO -->
                 <a class="navbar-brand fw-bold gradient-text" asp-controller="Home" asp-action="Index">
                     Hishen Perera
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
-                        aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
-                    <ul class="navbar-nav align-items-center">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                <!-- MOBILE TOGGLE -->
+                <button class="navbar-toggler" id="mobileMenuBtn" type="button" aria-label="Toggle navigation">
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                </button>
+                <!-- NAV LINKS + CONTACT + THEME TOGGLE -->
+                <div class="collapse navbar-collapse justify-content-between" id="navbarContent">
+                    
+                    <!-- NAV LINKS CENTERED -->
+                    <ul class="navbar-nav mx-auto align-items-center text-center">
+                        <li class="nav-item my-2 my-lg-0">
+                            <a class="nav-link nav-animate" asp-controller="Home" asp-action="Index">
+                                <span data-text="My Profile">My Profile</span>
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Project" asp-action="ManageProjects">Projects</a>
+                        <li class="nav-item my-2 my-lg-0">
+                            <a class="nav-link nav-animate" asp-controller="Project" asp-action="ManageProjects">
+                                <span data-text="Projects">Projects</span>
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li class="nav-item my-2 my-lg-0">
+                            <a class="nav-link nav-animate" asp-controller="Home" asp-action="Privacy">
+                                <span data-text="Contact">Contact</span>
+                            </a>    
                         </li>
                     </ul>
-                </div>
-                
-                <!-- THEME TOGGLE -->
-                <div class="theme-toggle">
-                    <button id="themeToggle" aria-label="Toggle theme">🌙</button>
+
+                    <!-- CONTACT + THEME TOGGLE -->
+                    <div class="d-flex align-items-center flex-column flex-lg-row gap-2 gap-lg-3 mt-3 mt-lg-0 text-center">
+                        <!-- CONTACT BUTTON -->
+                        <a href="tel:+94771234567" class="btn btn-primary btn-contact">
+                            <i class="bi bi-telephone-fill me-2"></i> +94 70 260 6776
+                        </a>
+
+                        <!-- THEME TOGGLE -->
+                        <button id="themeToggle" class="theme-btn" aria-label="Toggle theme">
+                            <i class="bi sun-icon bi-sun-fill"></i>
+                            <i class="bi moon-icon bi-moon-fill"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </nav>
+
+        <!-- SLIDE-DOWN MOBILE MENU -->
+        <div class="mobile-menu" id="mobileMenu">
+            <a class="nav-link nav-animate" asp-controller="Home" asp-action="Index">
+                <span data-text="Home">Home</span>
+            </a>
+            <a class="nav-link nav-animate" asp-controller="Project" asp-action="ManageProjects">
+                <span data-text="Projects">Projects</span>
+            </a>
+            <a class="nav-link nav-animate" asp-controller="Home" asp-action="Privacy">
+                <span data-text="Privacy">Privacy</span>
+            </a>
+            <a class="btn btn-contact mt-3" href="tel:+94771234567">
+                <i class="bi bi-telephone-fill me-2"></i> +94 70 260 6776
+            </a>
+            <button class="theme-btn mt-3" id="mobileThemeToggle">
+                <i class="bi sun-icon bi-sun-fill"></i>
+                <i class="bi moon-icon bi-moon-fill"></i>
+            </button>
+        </div>
     </header>
 
     <main role="main" class="pt-5">
@@ -52,9 +97,9 @@
         <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
             <span>© @DateTime.Now.Year Hishen Perera</span>
             <ul class="list-unstyled d-flex gap-3 mb-0">
-                <li><a href="https://github.com/YourGitHub" target="_blank">GitHub</a></li>
-                <li><a href="https://linkedin.com/in/YourLinkedIn" target="_blank">LinkedIn</a></li>
-                <li><a href="mailto:youremail@example.com">Email</a></li>
+                <li><a href="https://github.com/HishenPerera" target="_blank">GitHub</a></li>
+                <li><a href="https://www.linkedin.com/in/hishenperera/" target="_blank">LinkedIn</a></li>
+                <li><a href="hishenperera@gmail.com">Email</a></li>
             </ul>
         </div>
     </footer>
@@ -63,6 +108,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
