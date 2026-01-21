@@ -50,3 +50,58 @@
         }
     });
 });
+
+const typingElements = document.querySelectorAll(".typing-text");
+
+typingElements.forEach(el => {
+    const words = JSON.parse(el.getAttribute("data-words"));
+    let wordIndex = 0;
+    let letterIndex = 0;
+    let typing = true;
+
+    const typeSpeed = 100;   // typing speed in ms
+    const eraseSpeed = 50;   // deleting speed in ms
+    const delayBetweenWords = 1500; // pause after a word is typed
+
+    // Add a span for the blinking cursor if not already
+    if (!el.querySelector(".cursor")) {
+        const cursor = document.createElement("span");
+        cursor.classList.add("cursor");
+        cursor.textContent = "|";
+        el.appendChild(cursor);
+    }
+
+    const cursorSpan = el.querySelector(".cursor");
+
+    function type() {
+        const currentWord = words[wordIndex];
+
+        if (typing) {
+            el.textContent = currentWord.slice(0, letterIndex + 1);
+            el.appendChild(cursorSpan); // keep cursor at end
+            letterIndex++;
+
+            if (letterIndex === currentWord.length) {
+                typing = false;
+                setTimeout(type, delayBetweenWords);
+            } else {
+                setTimeout(type, typeSpeed);
+            }
+        } else {
+            el.textContent = currentWord.slice(0, letterIndex - 1);
+            el.appendChild(cursorSpan);
+            letterIndex--;
+
+            if (letterIndex === 0) {
+                typing = true;
+                wordIndex = (wordIndex + 1) % words.length;
+                setTimeout(type, typeSpeed);
+            } else {
+                setTimeout(type, eraseSpeed);
+            }
+        }
+    }
+
+    type();
+});
+

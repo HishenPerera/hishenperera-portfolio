@@ -4,8 +4,6 @@
     ViewData["Title"] = "Home";
 }
 
-
-
 @if (TempData["Success"] != null)
 {
     <div class="alert alert-success text-center mb-4">
@@ -13,20 +11,33 @@
     </div>
 }
 
-<!-- HERO -->
+<!-- HERO / PROFILE -->
 <section id="profile" class="hero-section">
-    <div class="container text-center">
-        <h1 class="hero-title">
-            Hi, I'm <span class="gradient-text">Hishen</span> 👋
-        </h1>
+    <div class="container d-flex flex-column flex-lg-row-reverse align-items-center justify-content-center gap-5">
+        
+        <!-- Profile Image -->
+        <div class="profile-image-wrapper">
+            <img src="/images/hishen.png" alt="Hishen Perera" class="profile-image" />
+        </div>
 
-        <p class="hero-subtitle">
-            Software Developer • .NET • Web Applications
-        </p>
+        <!-- Profile Text -->
+        <div class="profile-text text-center text-lg-start">
+            <h1 class="hero-title">
+                Hi, I'm <span class="gradient-text">Hishen</span> 👋
+            </h1>
 
-        <a href="#projects" class="btn hero-btn btn-lg mt-4">
-            View My Work
-        </a>
+            <!-- HERO SUBTITLE -->
+            <p class="hero-subtitle">
+                I'm a <span class="typing-text" data-words='["Software Developer","SLIIT Undergraduate","Full-Stack Enthusiast",".NET Specialist","Modern Web Builder"]'></span>
+            </p>
+
+            <div class="mt-3">
+                <a href="#projects" class="btn hero-btn btn-lg me-3">
+                    View My Work
+                </a>
+            </div>
+        </div>
+
     </div>
 </section>
 
@@ -74,7 +85,7 @@
     <div class="container">
 
         <h2 class="section-title text-center mb-5">
-            Send your problem
+            Drop a Message
         </h2>
         <div class="row justify-content-center">
             <div class="col-lg-6">
@@ -82,19 +93,20 @@
                 <form asp-action="Contact" method="post" class="contact-form">
 
                     <div class="mb-3">
-                        <label class="form-label">Your Name</label>
-                        <input asp-for="Contact.Name" class="form-control" required/>
+                        <label class="form-label" for="Contact_Name">Your Name</label>
+                        <input asp-for="Contact.Name" class="form-control" id="Contact_Name" required/>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Email Address</label>
-                        <input asp-for="Contact.Email" class="form-control" required/>
+                        <label class="form-label" for="Contact_Email">Email Address</label>
+                        <input asp-for="Contact.Email" class="form-control" id="Contact_Email" required/>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Message</label>
+                        <label class="form-label" for="Contact_Message">Message</label>
                         <textarea asp-for="Contact.Message"
                                   class="form-control"
+                                  id="Contact_Message"
                                   rows="5" required></textarea>
                     </div>
 
