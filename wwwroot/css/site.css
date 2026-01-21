@@ -132,7 +132,7 @@ body {
 
 .btn-contact:hover {
     background: var(--gradient);
-    color: var(--text);
+    color: var(--bg);
     border-color: var(--primary);
 }
 
@@ -303,6 +303,38 @@ body {
 }
 
 /* =========================
+   HERO BUTTON (MATCH CONTACT)
+========================= */
+.hero-btn {
+    background: var(--bg);
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 14px 36px;
+    border-radius: 50px;
+    font-size: 20px;
+    transition: transform 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+    font-family: var(--mobile-font);
+}
+
+/* Hover */
+.hero-btn:hover {
+    background: var(--gradient);
+    color: var(--bg);
+    border-color: var(--primary);
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(255, 136, 0, 0.35);
+}
+
+/* Active */
+.hero-btn:active {
+    transform: scale(0.97);
+}
+
+
+/* =========================
    PROJECTS
 ========================= */
 .projects-section {
@@ -341,7 +373,7 @@ body {
 
 .project-wide-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 40px 80px rgba(0,0,0,0.15);
+    box-shadow: 0 18px 40px rgba(255, 136, 0, 0.35);
 }
 
 .project-wide-card-wrapper.image-left .project-image { order: 0; }
@@ -400,6 +432,111 @@ body {
 }
 
 /* =========================
+   CONTACT (THEME AWARE)
+========================= */
+.contact-section {
+    padding: 80px 0;
+    background: var(--bg);
+}
+
+.contact-form {
+    background: var(--card);
+    padding: 36px;
+    border-radius: 22px;
+    border: 1px solid var(--border);
+    color: inherit;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.08);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.contact-form:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 18px 40px rgba(255, 136, 0, 0.35);
+}
+
+/* Labels */
+.contact-form .form-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 0.4rem;
+}
+
+/* Inputs & textarea */
+.contact-form .form-control {
+    background: var(--bg);
+    color: var(--text);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 16px;
+    font-size: 0.9rem;
+    transition: border 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* Placeholder */
+.contact-form .form-control::placeholder {
+    color: var(--muted);
+    opacity: 0.8;
+}
+
+/* Focus effect */
+.contact-form .form-control:focus {
+    background: var(--bg);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(255, 136, 0, 0.15);
+    outline: none;
+    color: var(--text);
+}
+
+/* Textarea resize */
+.contact-form textarea {
+    resize: none;
+}
+
+/* =========================
+   CONTACT BUTTON
+========================= */
+.contact-form .btn-primary {
+    background: var(--bg);
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 14px 36px;
+    border-radius: 50px;
+    font-size: 20px;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* Hover */
+.contact-form .btn-primary:hover {
+    background: var(--gradient);
+    color: var(--bg);
+    border: 2px solid var(--primary);
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(255, 136, 0, 0.35);
+}
+
+/* Active */
+.contact-form .btn-primary:active {
+    transform: scale(0.97);
+}
+
+/* =========================
+   DARK MODE TWEAKS
+========================= */
+
+[data-theme="dark"] .contact-form .form-control {
+    background: #0b1220;
+}
+
+
+
+/* =========================
    FOOTER
 ========================= */
 .footer-modern {
@@ -413,10 +550,45 @@ body {
     font-family: var(--mobile-font);
 }
 
+/* Footer Links - Base */
 .footer-modern a {
     color: var(--primary);
     text-decoration: none;
+    position: relative;
+    font-weight: 700;
+    transition: color 0.3s ease;
 }
+
+/* Hover Effect - Smooth underline */
+.footer-modern a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px; /* distance from text */
+    width: 0%;
+    height: 2px;
+    background: var(--primary);
+    transition: width 0.35s ease;
+    border-radius: 1px;
+}
+
+.footer-modern a:hover {
+    color: var(--gradient-start, var(--primary)); /* optional gradient color */
+}
+
+.footer-modern a:hover::after {
+    width: 100%;
+}
+
+/* Dark Mode Adjustments */
+[data-theme="dark"] .footer-modern a {
+    color: var(--primary);
+}
+
+[data-theme="dark"] .footer-modern a:hover {
+    color: var(--gradient-start, var(--primary));
+}
+
 
 /* =========================
    RESPONSIVE

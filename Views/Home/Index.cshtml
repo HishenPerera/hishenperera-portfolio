@@ -1,11 +1,20 @@
-﻿@model List<hishenperera_portfolio.Models.Project>
+﻿@model hishenperera_portfolio.Models.HomePageViewModel
 
 @{
     ViewData["Title"] = "Home";
 }
 
+
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success text-center mb-4">
+        @TempData["Success"]
+    </div>
+}
+
 <!-- HERO -->
-<section class="hero-section">
+<section id="profile" class="hero-section">
     <div class="container text-center">
         <h1 class="hero-title">
             Hi, I'm <span class="gradient-text">Hishen</span> 👋
@@ -15,7 +24,7 @@
             Software Developer • .NET • Web Applications
         </p>
 
-        <a href="#projects" class="btn btn-primary btn-lg mt-4">
+        <a href="#projects" class="btn hero-btn btn-lg mt-4">
             View My Work
         </a>
     </div>
@@ -29,17 +38,17 @@
             Featured Projects
         </h2>
 
-        @if (!Model.Any())
+        @if (!Model.Projects.Any())
         {
             <p class="text-center text-muted">No projects added yet.</p>
         }
         else
         {
-            @for (int i = 0; i < Model.Count; i++)
+            @for (int i = 0; i < Model.Projects.Count; i++)
             {
-                var project = Model[i];
-                // alternate layout
+                var project = Model.Projects[i];
                 var isEven = i % 2 == 0;
+
                 <div class="project-wide-card-wrapper @(isEven ? "image-left" : "image-right")">
                     <a href="@project.ProjectLink" target="_blank" class="project-wide-card">
                         <div class="project-image">
@@ -57,5 +66,47 @@
                 </div>
             }
         }
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+    <div class="container">
+
+        <h2 class="section-title text-center mb-5">
+            Send your problem
+        </h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+
+                <form asp-action="Contact" method="post" class="contact-form">
+
+                    <div class="mb-3">
+                        <label class="form-label">Your Name</label>
+                        <input asp-for="Contact.Name" class="form-control" required/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email Address</label>
+                        <input asp-for="Contact.Email" class="form-control" required/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Message</label>
+                        <textarea asp-for="Contact.Message"
+                                  class="form-control"
+                                  rows="5" required></textarea>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            Send Message
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
     </div>
 </section>
