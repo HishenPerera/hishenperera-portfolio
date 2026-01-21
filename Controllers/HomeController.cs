@@ -49,12 +49,20 @@ namespace hishenperera_portfolio.Controllers
                 "
             };
 
-            using (var client = new SmtpClient())
+            try
             {
-                client.Connect("smtp.gmail.com", 587, false);
-                client.Authenticate("hishenperera@gmail.com", "mjqz vuqi viww qfmo");
-                client.Send(message);
-                client.Disconnect(true);
+                using (var client = new SmtpClient())
+                {
+                    client.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+                    client.Authenticate("hishenperera@gmail.com", "mjqz vuqi viww qfmo");
+                    client.Send(message);
+                    client.Disconnect(true);
+                }
+                TempData["Success"] = "Message sent successfully!";
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = "Email failed: " + ex.Message;
             }
 
             TempData["Success"] = "Message sent successfully!";

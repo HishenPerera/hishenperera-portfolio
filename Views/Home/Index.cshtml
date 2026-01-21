@@ -6,10 +6,12 @@
 
 @if (TempData["Success"] != null)
 {
-    <div class="alert alert-success text-center mb-4">
-        @TempData["Success"]
+    <div class="toast-notification" id="toastSuccess">
+        <span>@TempData["Success"]</span>
+        <button type="button" class="close-toast" onclick="dismissToast()">&times;</button>
     </div>
 }
+
 
 <!-- HERO / PROFILE -->
 <section id="profile" class="hero-section">

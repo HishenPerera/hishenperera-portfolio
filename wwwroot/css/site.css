@@ -37,6 +37,71 @@ body {
 }
 
 /* =========================
+   TEMP DATA TOAST
+========================= */
+.toast-notification {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    max-width: 320px;
+    width: 90%;
+    background: var(--primary);
+    color: #fff;
+    padding: 16px 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    font-weight: 700;
+    font-size: 0.95rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: slideIn 0.5s ease forwards, fadeOut 0.5s ease 4.5s forwards;
+    z-index: 9999;
+}
+
+.toast-notification span {
+    flex: 1;
+}
+
+.toast-notification .close-toast {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 900;
+    cursor: pointer;
+    margin-left: 12px;
+    line-height: 1;
+    transition: transform 0.2s ease;
+}
+
+.toast-notification .close-toast:hover {
+    transform: scale(1.2);
+}
+
+/* Slide in from right */
+@keyframes slideIn {
+    from { transform: translateX(120%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* Fade out after delay */
+@keyframes fadeOut {
+    to { opacity: 0; transform: translateX(120%); }
+}
+
+/* Mobile adjustments */
+@media (max-width: 576px) {
+    .toast-notification {
+        top: 0.8rem;
+        right: 0.8rem;
+        padding: 12px 16px;
+        font-size: 0.9rem;
+    }
+}
+
+
+/* =========================
    NAVBAR
 ========================= */
 .navbar {

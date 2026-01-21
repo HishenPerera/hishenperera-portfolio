@@ -105,3 +105,19 @@ typingElements.forEach(el => {
     type();
 });
 
+// Remove toast manually
+    function dismissToast() {
+        const toast = document.getElementById('toastSuccess');
+        if (toast) toast.remove();
+    }
+
+    // Auto-remove after 5 seconds
+    window.addEventListener('DOMContentLoaded', () => {
+        const toast = document.getElementById('toastSuccess');
+        if (toast) {
+            setTimeout(() => {
+                toast.remove();
+            }, 5000); // 5 seconds
+        }
+    });    
+
