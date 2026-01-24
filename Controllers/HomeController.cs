@@ -3,6 +3,7 @@ using hishenperera_portfolio.Services;
 using hishenperera_portfolio.Models;
 using MimeKit;
 using MailKit.Net.Smtp;
+using MailKit.Security;
 
 namespace hishenperera_portfolio.Controllers
 {
@@ -35,7 +36,11 @@ namespace hishenperera_portfolio.Controllers
             }
 
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Portfolio Contact", "hishenportofolio@gmail.com"));
+            message.From.Add(new MailboxAddress(
+                "Portfolio Contact",
+                Environment.GetEnvironmentVariable("SMTP_EMAIL")
+            ));
+
             message.To.Add(new MailboxAddress("Hishen", "hishenportofolio@gmail.com"));
             message.Subject = "New Contact Form Message";
 
@@ -51,13 +56,22 @@ namespace hishenperera_portfolio.Controllers
 
             try
             {
-                using (var client = new SmtpClient())
-                {
-                    client.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-                    client.Authenticate("hishenperera@gmail.com", "mjqz vuqi viww qfmo");
-                    client.Send(message);
-                    client.Disconnect(true);
-                }
+                using var client = new SmtpClient();
+
+                client.Connect(
+                    Environment.GetEnvironmentVariable("SMTP_HOST"),
+                    int.Parse(Environment.GetEnvironmentVariable("SMTP_PORT")),
+                    SecureSocketOptions.StartTls
+                );
+
+                client.Authenticate(
+                    Environment.GetEnvironmentVariable("SMTP_EMAIL"),
+                    Environment.GetEnvironmentVariable("SMTP_PASSWORD")
+                );
+
+                client.Send(message);
+                client.Disconnect(true);
+
                 TempData["Success"] = "Message sent successfully!";
             }
             catch (Exception ex)
@@ -65,7 +79,6 @@ namespace hishenperera_portfolio.Controllers
                 TempData["Error"] = "Email failed: " + ex.Message;
             }
 
-            TempData["Success"] = "Message sent successfully!";
             return RedirectToAction("Index");
         }
     }
