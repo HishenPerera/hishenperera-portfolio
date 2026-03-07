@@ -832,3 +832,79 @@ body {
     }
 }
 
+
+/* =========================
+   SCROLL REVEAL ANIMATIONS
+========================= */
+
+/* Base hidden state — elements start small + invisible */
+.reveal {
+    opacity: 0;
+    transform: scale(0.88) translateY(28px);
+    transition:
+        opacity 0.72s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.72s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+}
+
+/* Stagger children inside a reveal group */
+.reveal-group > * {
+    opacity: 0;
+    transform: scale(0.88) translateY(28px);
+    transition:
+        opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+}
+
+/* Triggered state — springs to natural size */
+.reveal.in-view,
+.reveal-group.in-view > * {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+/* Stagger delays for reveal-group children */
+.reveal-group.in-view > *:nth-child(1) { transition-delay: 0.00s; }
+.reveal-group.in-view > *:nth-child(2) { transition-delay: 0.10s; }
+.reveal-group.in-view > *:nth-child(3) { transition-delay: 0.20s; }
+.reveal-group.in-view > *:nth-child(4) { transition-delay: 0.30s; }
+.reveal-group.in-view > *:nth-child(5) { transition-delay: 0.40s; }
+.reveal-group.in-view > *:nth-child(6) { transition-delay: 0.50s; }
+
+/* Slower, more dramatic reveal for hero elements */
+.reveal-hero {
+    opacity: 0;
+    transform: scale(0.80) translateY(36px);
+    transition:
+        opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+}
+.reveal-hero.in-view {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+/* Section title pop */
+.reveal-title {
+    opacity: 0;
+    transform: scale(0.82) translateY(20px);
+    transition:
+        opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+}
+.reveal-title.in-view {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+    .reveal, .reveal-group > *, .reveal-hero, .reveal-title {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}

@@ -16,14 +16,14 @@
 <!-- HERO / PROFILE -->
 <section id="profile" class="hero-section">
     <div class="container d-flex flex-column flex-lg-row-reverse align-items-center justify-content-center gap-5">
-        
+
         <!-- Profile Image -->
-        <div class="profile-image-wrapper">
+        <div class="profile-image-wrapper reveal-hero" style="transition-delay: 0.1s;">
             <img src="/images/hishen.png" alt="Hishen Perera" class="profile-image" />
         </div>
 
         <!-- Profile Text -->
-        <div class="profile-text text-center text-lg-start">
+        <div class="profile-text text-center text-lg-start reveal-group">
             <h1 class="hero-title">
                 Hi, I'm <span class="gradient-text">Hishen</span> 👋
             </h1>
@@ -47,13 +47,13 @@
 <section id="projects" class="projects-section">
     <div class="container">
 
-        <h2 class="section-title text-center mb-5">
+        <h2 class="section-title text-center mb-5 reveal-title">
             Featured Projects
         </h2>
 
         @if (!Model.Projects.Any())
         {
-            <p class="text-center text-muted">No projects added yet.</p>
+            <p class="text-center text-muted reveal">No projects added yet.</p>
         }
         else
         {
@@ -62,7 +62,7 @@
                 var project = Model.Projects[i];
                 var isEven = i % 2 == 0;
 
-                <div class="project-wide-card-wrapper @(isEven ? "image-left" : "image-right")">
+                <div class="project-wide-card-wrapper @(isEven ? "image-left" : "image-right") reveal">
                     <a href="@project.ProjectLink" target="_blank" class="project-wide-card">
                         <div class="project-image">
                             <img src="@project.ProjectImg"
@@ -86,11 +86,11 @@
 <section id="contact" class="contact-section">
     <div class="container">
 
-        <h2 class="section-title text-center mb-5">
+        <h2 class="section-title text-center mb-5 reveal-title">
             Drop a Message
         </h2>
         <div class="row justify-content-center">
-            <div class="col-lg-6">
+            <div class="col-lg-6 reveal">
 
                 <form asp-action="Contact" method="post" class="contact-form">
 
@@ -124,3 +124,47 @@
         </div>
     </div>
 </section>
+
+@section Scripts {
+<script>
+    (function () {
+        var targets = document.querySelectorAll('.reveal, .reveal-hero, .reveal-title, .reveal-group');
+        if (!targets.length) return;
+
+        // ── Step 1: Kill transitions so elements already in-view on load
+        //            snap into place silently (no animation on first visit).
+        targets.forEach(function (el) {
+            el.style.transition = 'none';
+        });
+
+        var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                } else {
+                    // Reverse: shrink back out when scrolled past going up
+                    entry.target.classList.remove('in-view');
+                }
+            });
+        }, {
+            threshold: 0.12,
+            rootMargin: '0px 0px -40px 0px'
+        });
+
+        targets.forEach(function (el) {
+            observer.observe(el);
+        });
+
+        // ── Step 2: Re-enable transitions after two paint frames.
+        //            By then, initial in-view elements have already snapped
+        //            to their visible state without animating.
+        requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+                targets.forEach(function (el) {
+                    el.style.transition = '';
+                });
+            });
+        });
+    })();
+</script>
+}
