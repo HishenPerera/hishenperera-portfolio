@@ -9,8 +9,8 @@
         html.setAttribute("data-theme", theme);
         localStorage.setItem("theme", theme);
 
-        document.querySelectorAll(".theme-btn .sun-icon").forEach(i => i.style.opacity = theme === "dark" ? "1" : "0");
-        document.querySelectorAll(".theme-btn .moon-icon").forEach(i => i.style.opacity = theme === "dark" ? "0" : "1");
+        document.querySelectorAll(".theme-btn .sun-icon").forEach(i => i.style.opacity = theme === "dark" ? "0" : "1");
+        document.querySelectorAll(".theme-btn .moon-icon").forEach(i => i.style.opacity = theme === "dark" ? "1" : "0");
     }
 
     let savedTheme = localStorage.getItem("theme") || "light";
