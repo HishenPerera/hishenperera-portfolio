@@ -28,7 +28,12 @@
 
         <!-- Profile Image -->
         <div class="profile-image-wrapper reveal-hero" style="transition-delay: 0.1s;">
-            <img src="/images/hishen.png" alt="Hishen Perera" class="profile-image" />
+            <img src="/images/hishen.png"
+                 alt="Hishen Perera"
+                 class="profile-image"
+                 loading="eager"
+                 fetchpriority="high"
+                 decoding="async" />
         </div>
 
         <!-- Profile Text -->
@@ -76,6 +81,8 @@
                         <div class="project-image">
                             <img src="@project.ProjectImg"
                                  alt="@project.ProjectName"
+                                 loading="lazy"
+                                 decoding="async"
                                  onerror="this.src='/images/placeholder.png'" />
                         </div>
 

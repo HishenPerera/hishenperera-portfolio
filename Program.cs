@@ -17,7 +17,14 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = ctx =>
+    {
+        // Cache images, CSS, JS and fonts for 30 days in the browser
+        ctx.Context.Response.Headers["Cache-Control"] = "public, max-age=2592000, immutable";
+    }
+});
 app.UseRouting();
 
 app.UseAuthorization();
