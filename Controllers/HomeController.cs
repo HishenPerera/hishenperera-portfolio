@@ -29,7 +29,7 @@ namespace hishenperera_portfolio.Controllers
         }
 
         [HttpPost]
-        public IActionResult Contact(HomePageViewModel model)
+        public async Task<IActionResult> Contact(HomePageViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -143,13 +143,22 @@ namespace hishenperera_portfolio.Controllers
 
             try
             {
+                // 10-second timeout — prevents browser hanging if Railway blocks SMTP
+                using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+
                 using var client = new SmtpClient();
-                client.Connect(smtpHost, smtpPort, SecureSocketOptions.StartTls);
-                client.Authenticate(smtpEmail, smtpPassword);
-                client.Send(message);
-                client.Disconnect(true);
+                client.Timeout = 10000; // ms
+
+                await client.ConnectAsync(smtpHost, smtpPort, SecureSocketOptions.StartTls, cts.Token);
+                await client.AuthenticateAsync(smtpEmail, smtpPassword, cts.Token);
+                await client.SendAsync(message, cts.Token);
+                await client.DisconnectAsync(true, cts.Token);
 
                 TempData["Success"] = "Message sent! I'll get back to you soon 🎉";
+            }
+            catch (OperationCanceledException)
+            {
+                TempData["Error"] = "Connection timed out. Please try WhatsApp or email me directly.";
             }
             catch (Exception ex)
             {
