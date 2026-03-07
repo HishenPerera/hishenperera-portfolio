@@ -10,10 +10,12 @@ namespace hishenperera_portfolio.Controllers
     public class HomeController : Controller
     {
         private readonly ProjectService _projectService;
+        private readonly IConfiguration _config;
 
-        public HomeController(ProjectService projectService)
+        public HomeController(ProjectService projectService, IConfiguration config)
         {
             _projectService = projectService;
+            _config = config;
         }
 
         public IActionResult Index()
@@ -35,48 +37,123 @@ namespace hishenperera_portfolio.Controllers
                 return View("Index", model);
             }
 
-            var message = new MimeMessage();
-            message.From.Add(new MailboxAddress(
-                "Portfolio Contact",
-                Environment.GetEnvironmentVariable("SMTP_EMAIL")
-            ));
+            var smtpHost     = _config["Smtp:Host"];
+            var smtpPort     = int.Parse(_config["Smtp:Port"] ?? "587");
+            var smtpEmail    = _config["Smtp:Email"];
+            var smtpPassword = _config["Smtp:Password"];
 
-            message.To.Add(new MailboxAddress("Hishen", "hishenportofolio@gmail.com"));
-            message.Subject = "New Contact Form Message";
+            if (string.IsNullOrWhiteSpace(smtpEmail) || string.IsNullOrWhiteSpace(smtpPassword))
+            {
+                TempData["Error"] = "Email service is not configured. Please contact me directly at hishenportofolio@gmail.com";
+                return RedirectToAction("Index");
+            }
+
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress("Portfolio Contact", smtpEmail));
+            message.To.Add(new MailboxAddress("Hishen", "hishenperera@gmail.com"));
+            message.Subject = $"📬 New Portfolio Enquiry from {model.Contact.Name}";
 
             message.Body = new TextPart("html")
             {
                 Text = $@"
-                    <h2>New Contact Message</h2>
-                    <p><strong>Name:</strong> {model.Contact.Name}</p>
-                    <p><strong>Email:</strong> {model.Contact.Email}</p>
-                    <p><strong>Message:</strong><br/>{model.Contact.Message}</p>
-                "
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+</head>
+<body style='margin:0;padding:0;background:#f1f5f9;font-family:Montserrat,Segoe UI,Arial,sans-serif;'>
+  <table width='100%' cellpadding='0' cellspacing='0' style='background:#f1f5f9;padding:40px 0;'>
+    <tr>
+      <td align='center'>
+        <table width='580' cellpadding='0' cellspacing='0' style='max-width:580px;width:100%;'>
+
+          <!-- HEADER -->
+          <tr>
+            <td style='background:linear-gradient(135deg,#ff8800,#ffb347);border-radius:16px 16px 0 0;padding:36px 40px;text-align:center;'>
+              <h1 style='margin:0;color:#ffffff;font-size:26px;font-weight:800;letter-spacing:2px;text-transform:uppercase;'>
+                HISHEN PERERA
+              </h1>
+              <p style='margin:6px 0 0;color:rgba(255,255,255,0.85);font-size:13px;letter-spacing:1px;text-transform:uppercase;'>
+                Portfolio · New Enquiry
+              </p>
+            </td>
+          </tr>
+
+          <!-- BODY CARD -->
+          <tr>
+            <td style='background:#ffffff;padding:36px 40px;border-left:1px solid #e5e7eb;border-right:1px solid #e5e7eb;'>
+
+              <p style='margin:0 0 24px;font-size:15px;color:#374151;line-height:1.6;'>
+                You have received a new message through your portfolio contact form. Details are below:
+              </p>
+
+              <!-- INFO TABLE -->
+              <table width='100%' cellpadding='0' cellspacing='0' style='border-collapse:collapse;margin-bottom:28px;'>
+                <tr>
+                  <td style='padding:14px 16px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:8px 8px 0 0;width:30%;'>
+                    <span style='font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#ff8800;'>Full Name</span>
+                  </td>
+                  <td style='padding:14px 16px;background:#f8fafc;border:1px solid #e5e7eb;border-top:1px solid #e5e7eb;border-left:none;border-radius:0 8px 0 0;'>
+                    <span style='font-size:15px;font-weight:600;color:#0f172a;'>{model.Contact.Name}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style='padding:14px 16px;background:#ffffff;border:1px solid #e5e7eb;border-top:none;'>
+                    <span style='font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#ff8800;'>Contact No.</span>
+                  </td>
+                  <td style='padding:14px 16px;background:#ffffff;border:1px solid #e5e7eb;border-top:none;border-left:none;'>
+                    <span style='font-size:15px;font-weight:600;color:#0f172a;'>{model.Contact.Phone}</span>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- MESSAGE BOX -->
+              <div style='margin-bottom:8px;'>
+                <span style='font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#ff8800;'>Message</span>
+              </div>
+              <div style='background:#f8fafc;border:1px solid #e5e7eb;border-radius:10px;padding:20px 24px;font-size:15px;color:#374151;line-height:1.75;white-space:pre-wrap;'>
+{model.Contact.Message}
+              </div>
+
+            </td>
+          </tr>
+
+          <!-- FOOTER -->
+          <tr>
+            <td style='background:#0b1220;border-radius:0 0 16px 16px;padding:24px 40px;text-align:center;'>
+              <p style='margin:0;font-size:12px;color:#64748b;letter-spacing:0.5px;'>
+                This message was sent via the contact form on
+                <a href='https://hishenperera.site' style='color:#ff8800;text-decoration:none;font-weight:600;'>hishenperera.com</a>
+              </p>
+              <p style='margin:8px 0 0;font-size:11px;color:#475569;'>
+                © {DateTime.Now.Year} Hishen Perera · All rights reserved
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>"
             };
+
 
             try
             {
                 using var client = new SmtpClient();
-
-                client.Connect(
-                    Environment.GetEnvironmentVariable("SMTP_HOST"),
-                    int.Parse(Environment.GetEnvironmentVariable("SMTP_PORT")),
-                    SecureSocketOptions.StartTls
-                );
-
-                client.Authenticate(
-                    Environment.GetEnvironmentVariable("SMTP_EMAIL"),
-                    Environment.GetEnvironmentVariable("SMTP_PASSWORD")
-                );
-
+                client.Connect(smtpHost, smtpPort, SecureSocketOptions.StartTls);
+                client.Authenticate(smtpEmail, smtpPassword);
                 client.Send(message);
                 client.Disconnect(true);
 
-                TempData["Success"] = "Message sent successfully!";
+                TempData["Success"] = "Message sent! I'll get back to you soon 🎉";
             }
             catch (Exception ex)
             {
-                TempData["Error"] = "Email failed: " + ex.Message;
+                TempData["Error"] = "Couldn't send the message: " + ex.Message;
             }
 
             return RedirectToAction("Index");

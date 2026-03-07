@@ -12,6 +12,15 @@
     </div>
 }
 
+@if (TempData["Error"] != null)
+{
+    <div class="toast-notification toast-error" id="toastError">
+        <span>@TempData["Error"]</span>
+        <button type="button" class="close-toast" onclick="this.parentElement.remove()">&times;</button>
+    </div>
+}
+
+
 
 <!-- HERO / PROFILE -->
 <section id="profile" class="hero-section">
@@ -99,10 +108,230 @@
                         <input asp-for="Contact.Name" class="form-control" id="Contact_Name" required/>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label" for="Contact_Email">Email Address</label>
-                        <input asp-for="Contact.Email" class="form-control" id="Contact_Email" required/>
+                    <div class="mb-4">
+                        <label class="form-label" for="localPhone">Contact Number</label>
+
+                        <!-- Hidden field that gets the combined full number on submit -->
+                        <input asp-for="Contact.Phone" type="hidden" id="Contact_Phone" />
+
+                        <div class="phone-picker-wrapper">
+                            <!-- Country code dropdown -->
+                            <div class="phone-select-wrapper">
+                            <select id="countryCodeSelect" class="phone-country-select" aria-label="Country code">
+                                <option value="+93" data-flag="🇦🇫">🇦🇫 AF +93</option>
+                                <option value="+355" data-flag="🇦🇱">🇦🇱 AL +355</option>
+                                <option value="+213" data-flag="🇩🇿">🇩🇿 DZ +213</option>
+                                <option value="+1684" data-flag="🇦🇸">🇦🇸 AS +1684</option>
+                                <option value="+376" data-flag="🇦🇩">🇦🇩 AD +376</option>
+                                <option value="+244" data-flag="🇦🇴">🇦🇴 AO +244</option>
+                                <option value="+1264" data-flag="🇦🇮">🇦🇮 AI +1264</option>
+                                <option value="+54" data-flag="🇦🇷">🇦🇷 AR +54</option>
+                                <option value="+374" data-flag="🇦🇲">🇦🇲 AM +374</option>
+                                <option value="+297" data-flag="🇦🇼">🇦🇼 AW +297</option>
+                                <option value="+61" data-flag="🇦🇺">🇦🇺 AU +61</option>
+                                <option value="+43" data-flag="🇦🇹">🇦🇹 AT +43</option>
+                                <option value="+994" data-flag="🇦🇿">🇦🇿 AZ +994</option>
+                                <option value="+1242" data-flag="🇧🇸">🇧🇸 BS +1242</option>
+                                <option value="+973" data-flag="🇧🇭">🇧🇭 BH +973</option>
+                                <option value="+880" data-flag="🇧🇩">🇧🇩 BD +880</option>
+                                <option value="+1246" data-flag="🇧🇧">🇧🇧 BB +1246</option>
+                                <option value="+375" data-flag="🇧🇾">🇧🇾 BY +375</option>
+                                <option value="+32" data-flag="🇧🇪">🇧🇪 BE +32</option>
+                                <option value="+501" data-flag="🇧🇿">🇧🇿 BZ +501</option>
+                                <option value="+229" data-flag="🇧🇯">🇧🇯 BJ +229</option>
+                                <option value="+975" data-flag="🇧🇹">🇧🇹 BT +975</option>
+                                <option value="+591" data-flag="🇧🇴">🇧🇴 BO +591</option>
+                                <option value="+387" data-flag="🇧🇦">🇧🇦 BA +387</option>
+                                <option value="+267" data-flag="🇧🇼">🇧🇼 BW +267</option>
+                                <option value="+55" data-flag="🇧🇷">🇧🇷 BR +55</option>
+                                <option value="+673" data-flag="🇧🇳">🇧🇳 BN +673</option>
+                                <option value="+359" data-flag="🇧🇬">🇧🇬 BG +359</option>
+                                <option value="+226" data-flag="🇧🇫">🇧🇫 BF +226</option>
+                                <option value="+257" data-flag="🇧🇮">🇧🇮 BI +257</option>
+                                <option value="+855" data-flag="🇰🇭">🇰🇭 KH +855</option>
+                                <option value="+237" data-flag="🇨🇲">🇨🇲 CM +237</option>
+                                <option value="+1" data-flag="🇨🇦">🇨🇦 CA +1</option>
+                                <option value="+238" data-flag="🇨🇻">🇨🇻 CV +238</option>
+                                <option value="+1345" data-flag="🇰🇾">🇰🇾 KY +1345</option>
+                                <option value="+236" data-flag="🇨🇫">🇨🇫 CF +236</option>
+                                <option value="+235" data-flag="🇹🇩">🇹🇩 TD +235</option>
+                                <option value="+56" data-flag="🇨🇱">🇨🇱 CL +56</option>
+                                <option value="+86" data-flag="🇨🇳">🇨🇳 CN +86</option>
+                                <option value="+57" data-flag="🇨🇴">🇨🇴 CO +57</option>
+                                <option value="+269" data-flag="🇰🇲">🇰🇲 KM +269</option>
+                                <option value="+243" data-flag="🇨🇩">🇨🇩 CD +243</option>
+                                <option value="+242" data-flag="🇨🇬">🇨🇬 CG +242</option>
+                                <option value="+506" data-flag="🇨🇷">🇨🇷 CR +506</option>
+                                <option value="+385" data-flag="🇭🇷">🇭🇷 HR +385</option>
+                                <option value="+53" data-flag="🇨🇺">🇨🇺 CU +53</option>
+                                <option value="+357" data-flag="🇨🇾">🇨🇾 CY +357</option>
+                                <option value="+420" data-flag="🇨🇿">🇨🇿 CZ +420</option>
+                                <option value="+45" data-flag="🇩🇰">🇩🇰 DK +45</option>
+                                <option value="+253" data-flag="🇩🇯">🇩🇯 DJ +253</option>
+                                <option value="+1767" data-flag="🇩🇲">🇩🇲 DM +1767</option>
+                                <option value="+1809" data-flag="🇩🇴">🇩🇴 DO +1809</option>
+                                <option value="+593" data-flag="🇪🇨">🇪🇨 EC +593</option>
+                                <option value="+20" data-flag="🇪🇬">🇪🇬 EG +20</option>
+                                <option value="+503" data-flag="🇸🇻">🇸🇻 SV +503</option>
+                                <option value="+240" data-flag="🇬🇶">🇬🇶 GQ +240</option>
+                                <option value="+291" data-flag="🇪🇷">🇪🇷 ER +291</option>
+                                <option value="+372" data-flag="🇪🇪">🇪🇪 EE +372</option>
+                                <option value="+251" data-flag="🇪🇹">🇪🇹 ET +251</option>
+                                <option value="+679" data-flag="🇫🇯">🇫🇯 FJ +679</option>
+                                <option value="+358" data-flag="🇫🇮">🇫🇮 FI +358</option>
+                                <option value="+33" data-flag="🇫🇷">🇫🇷 FR +33</option>
+                                <option value="+241" data-flag="🇬🇦">🇬🇦 GA +241</option>
+                                <option value="+220" data-flag="🇬🇲">🇬🇲 GM +220</option>
+                                <option value="+995" data-flag="🇬🇪">🇬🇪 GE +995</option>
+                                <option value="+49" data-flag="🇩🇪">🇩🇪 DE +49</option>
+                                <option value="+233" data-flag="🇬🇭">🇬🇭 GH +233</option>
+                                <option value="+30" data-flag="🇬🇷">🇬🇷 GR +30</option>
+                                <option value="+1473" data-flag="🇬🇩">🇬🇩 GD +1473</option>
+                                <option value="+502" data-flag="🇬🇹">🇬🇹 GT +502</option>
+                                <option value="+224" data-flag="🇬🇳">🇬🇳 GN +224</option>
+                                <option value="+245" data-flag="🇬🇼">🇬🇼 GW +245</option>
+                                <option value="+592" data-flag="🇬🇾">🇬🇾 GY +592</option>
+                                <option value="+509" data-flag="🇭🇹">🇭🇹 HT +509</option>
+                                <option value="+504" data-flag="🇭🇳">🇭🇳 HN +504</option>
+                                <option value="+852" data-flag="🇭🇰">🇭🇰 HK +852</option>
+                                <option value="+36" data-flag="🇭🇺">🇭🇺 HU +36</option>
+                                <option value="+354" data-flag="🇮🇸">🇮🇸 IS +354</option>
+                                <option value="+91" data-flag="🇮🇳">🇮🇳 IN +91</option>
+                                <option value="+62" data-flag="🇮🇩">🇮🇩 ID +62</option>
+                                <option value="+98" data-flag="🇮🇷">🇮🇷 IR +98</option>
+                                <option value="+964" data-flag="🇮🇶">🇮🇶 IQ +964</option>
+                                <option value="+353" data-flag="🇮🇪">🇮🇪 IE +353</option>
+                                <option value="+972" data-flag="🇮🇱">🇮🇱 IL +972</option>
+                                <option value="+39" data-flag="🇮🇹">🇮🇹 IT +39</option>
+                                <option value="+1876" data-flag="🇯🇲">🇯🇲 JM +1876</option>
+                                <option value="+81" data-flag="🇯🇵">🇯🇵 JP +81</option>
+                                <option value="+962" data-flag="🇯🇴">🇯🇴 JO +962</option>
+                                <option value="+7" data-flag="🇰🇿">🇰🇿 KZ +7</option>
+                                <option value="+254" data-flag="🇰🇪">🇰🇪 KE +254</option>
+                                <option value="+686" data-flag="🇰🇮">🇰🇮 KI +686</option>
+                                <option value="+850" data-flag="🇰🇵">🇰🇵 KP +850</option>
+                                <option value="+82" data-flag="🇰🇷">🇰🇷 KR +82</option>
+                                <option value="+965" data-flag="🇰🇼">🇰🇼 KW +965</option>
+                                <option value="+996" data-flag="🇰🇬">🇰🇬 KG +996</option>
+                                <option value="+856" data-flag="🇱🇦">🇱🇦 LA +856</option>
+                                <option value="+371" data-flag="🇱🇻">🇱🇻 LV +371</option>
+                                <option value="+961" data-flag="🇱🇧">🇱🇧 LB +961</option>
+                                <option value="+266" data-flag="🇱🇸">🇱🇸 LS +266</option>
+                                <option value="+231" data-flag="🇱🇷">🇱🇷 LR +231</option>
+                                <option value="+218" data-flag="🇱🇾">🇱🇾 LY +218</option>
+                                <option value="+423" data-flag="🇱🇮">🇱🇮 LI +423</option>
+                                <option value="+370" data-flag="🇱🇹">🇱🇹 LT +370</option>
+                                <option value="+352" data-flag="🇱🇺">🇱🇺 LU +352</option>
+                                <option value="+853" data-flag="🇲🇴">🇲🇴 MO +853</option>
+                                <option value="+389" data-flag="🇲🇰">🇲🇰 MK +389</option>
+                                <option value="+261" data-flag="🇲🇬">🇲🇬 MG +261</option>
+                                <option value="+265" data-flag="🇲🇼">🇲🇼 MW +265</option>
+                                <option value="+60" data-flag="🇲🇾">🇲🇾 MY +60</option>
+                                <option value="+960" data-flag="🇲🇻">🇲🇻 MV +960</option>
+                                <option value="+223" data-flag="🇲🇱">🇲🇱 ML +223</option>
+                                <option value="+356" data-flag="🇲🇹">🇲🇹 MT +356</option>
+                                <option value="+692" data-flag="🇲🇭">🇲🇭 MH +692</option>
+                                <option value="+222" data-flag="🇲🇷">🇲🇷 MR +222</option>
+                                <option value="+230" data-flag="🇲🇺">🇲🇺 MU +230</option>
+                                <option value="+52" data-flag="🇲🇽">🇲🇽 MX +52</option>
+                                <option value="+691" data-flag="🇫🇲">🇫🇲 FM +691</option>
+                                <option value="+373" data-flag="🇲🇩">🇲🇩 MD +373</option>
+                                <option value="+377" data-flag="🇲🇨">🇲🇨 MC +377</option>
+                                <option value="+976" data-flag="🇲🇳">🇲🇳 MN +976</option>
+                                <option value="+382" data-flag="🇲🇪">🇲🇪 ME +382</option>
+                                <option value="+212" data-flag="🇲🇦">🇲🇦 MA +212</option>
+                                <option value="+258" data-flag="🇲🇿">🇲🇿 MZ +258</option>
+                                <option value="+95" data-flag="🇲🇲">🇲🇲 MM +95</option>
+                                <option value="+264" data-flag="🇳🇦">🇳🇦 NA +264</option>
+                                <option value="+674" data-flag="🇳🇷">🇳🇷 NR +674</option>
+                                <option value="+977" data-flag="🇳🇵">🇳🇵 NP +977</option>
+                                <option value="+31" data-flag="🇳🇱">🇳🇱 NL +31</option>
+                                <option value="+64" data-flag="🇳🇿">🇳🇿 NZ +64</option>
+                                <option value="+505" data-flag="🇳🇮">🇳🇮 NI +505</option>
+                                <option value="+227" data-flag="🇳🇪">🇳🇪 NE +227</option>
+                                <option value="+234" data-flag="🇳🇬">🇳🇬 NG +234</option>
+                                <option value="+47" data-flag="🇳🇴">🇳🇴 NO +47</option>
+                                <option value="+968" data-flag="🇴🇲">🇴🇲 OM +968</option>
+                                <option value="+92" data-flag="🇵🇰">🇵🇰 PK +92</option>
+                                <option value="+680" data-flag="🇵🇼">🇵🇼 PW +680</option>
+                                <option value="+507" data-flag="🇵🇦">🇵🇦 PA +507</option>
+                                <option value="+675" data-flag="🇵🇬">🇵🇬 PG +675</option>
+                                <option value="+595" data-flag="🇵🇾">🇵🇾 PY +595</option>
+                                <option value="+51" data-flag="🇵🇪">🇵🇪 PE +51</option>
+                                <option value="+63" data-flag="🇵🇭">🇵🇭 PH +63</option>
+                                <option value="+48" data-flag="🇵🇱">🇵🇱 PL +48</option>
+                                <option value="+351" data-flag="🇵🇹">🇵🇹 PT +351</option>
+                                <option value="+1787" data-flag="🇵🇷">🇵🇷 PR +1787</option>
+                                <option value="+974" data-flag="🇶🇦">🇶🇦 QA +974</option>
+                                <option value="+40" data-flag="🇷🇴">🇷🇴 RO +40</option>
+                                <option value="+7" data-flag="🇷🇺">🇷🇺 RU +7</option>
+                                <option value="+250" data-flag="🇷🇼">🇷🇼 RW +250</option>
+                                <option value="+1869" data-flag="🇰🇳">🇰🇳 KN +1869</option>
+                                <option value="+1758" data-flag="🇱🇨">🇱🇨 LC +1758</option>
+                                <option value="+1784" data-flag="🇻🇨">🇻🇨 VC +1784</option>
+                                <option value="+685" data-flag="🇼🇸">🇼🇸 WS +685</option>
+                                <option value="+378" data-flag="🇸🇲">🇸🇲 SM +378</option>
+                                <option value="+239" data-flag="🇸🇹">🇸🇹 ST +239</option>
+                                <option value="+966" data-flag="🇸🇦">🇸🇦 SA +966</option>
+                                <option value="+221" data-flag="🇸🇳">🇸🇳 SN +221</option>
+                                <option value="+381" data-flag="🇷🇸">🇷🇸 RS +381</option>
+                                <option value="+232" data-flag="🇸🇱">🇸🇱 SL +232</option>
+                                <option value="+65" data-flag="🇸🇬">🇸🇬 SG +65</option>
+                                <option value="+421" data-flag="🇸🇰">🇸🇰 SK +421</option>
+                                <option value="+386" data-flag="🇸🇮">🇸🇮 SI +386</option>
+                                <option value="+677" data-flag="🇸🇧">🇸🇧 SB +677</option>
+                                <option value="+252" data-flag="🇸🇴">🇸🇴 SO +252</option>
+                                <option value="+27" data-flag="🇿🇦">🇿🇦 ZA +27</option>
+                                <option value="+211" data-flag="🇸🇸">🇸🇸 SS +211</option>
+                                <option value="+34" data-flag="🇪🇸">🇪🇸 ES +34</option>
+                                <option value="+94" data-flag="🇱🇰" selected>🇱🇰 LK +94</option>
+                                <option value="+249" data-flag="🇸🇩">🇸🇩 SD +249</option>
+                                <option value="+597" data-flag="🇸🇷">🇸🇷 SR +597</option>
+                                <option value="+268" data-flag="🇸🇿">🇸🇿 SZ +268</option>
+                                <option value="+46" data-flag="🇸🇪">🇸🇪 SE +46</option>
+                                <option value="+41" data-flag="🇨🇭">🇨🇭 CH +41</option>
+                                <option value="+963" data-flag="🇸🇾">🇸🇾 SY +963</option>
+                                <option value="+886" data-flag="🇹🇼">🇹🇼 TW +886</option>
+                                <option value="+992" data-flag="🇹🇯">🇹🇯 TJ +992</option>
+                                <option value="+255" data-flag="🇹🇿">🇹🇿 TZ +255</option>
+                                <option value="+66" data-flag="🇹🇭">🇹🇭 TH +66</option>
+                                <option value="+670" data-flag="🇹🇱">🇹🇱 TL +670</option>
+                                <option value="+228" data-flag="🇹🇬">🇹🇬 TG +228</option>
+                                <option value="+676" data-flag="🇹🇴">🇹🇴 TO +676</option>
+                                <option value="+1868" data-flag="🇹🇹">🇹🇹 TT +1868</option>
+                                <option value="+216" data-flag="🇹🇳">🇹🇳 TN +216</option>
+                                <option value="+90" data-flag="🇹🇷">🇹🇷 TR +90</option>
+                                <option value="+993" data-flag="🇹🇲">🇹🇲 TM +993</option>
+                                <option value="+688" data-flag="🇹🇻">🇹🇻 TV +688</option>
+                                <option value="+256" data-flag="🇺🇬">🇺🇬 UG +256</option>
+                                <option value="+380" data-flag="🇺🇦">🇺🇦 UA +380</option>
+                                <option value="+971" data-flag="🇦🇪">🇦🇪 AE +971</option>
+                                <option value="+44" data-flag="🇬🇧">🇬🇧 GB +44</option>
+                                <option value="+1" data-flag="🇺🇸">🇺🇸 US +1</option>
+                                <option value="+598" data-flag="🇺🇾">🇺🇾 UY +598</option>
+                                <option value="+998" data-flag="🇺🇿">🇺🇿 UZ +998</option>
+                                <option value="+678" data-flag="🇻🇺">🇻🇺 VU +678</option>
+                                <option value="+58" data-flag="🇻🇪">🇻🇪 VE +58</option>
+                                <option value="+84" data-flag="🇻🇳">🇻🇳 VN +84</option>
+                                <option value="+967" data-flag="🇾🇪">🇾🇪 YE +967</option>
+                                <option value="+260" data-flag="🇿🇲">🇿🇲 ZM +260</option>
+                                <option value="+263" data-flag="🇿🇼">🇿🇼 ZW +263</option>
+                            </select>
+                            </div>
+
+                            <!-- Local number input -->
+                            <input type="tel"
+                                   id="localPhone"
+                                   class="form-control phone-local-input"
+                                   placeholder="77 XXX XXXX"
+                                   maxlength="11"
+                                   autocomplete="tel-national"
+                                   inputmode="numeric"
+                                   required />
+                        </div>
+                        <span asp-validation-for="Contact.Phone" class="text-danger" style="font-size:0.8rem;"></span>
                     </div>
+
 
                     <div class="mb-3">
                         <label class="form-label" for="Contact_Message">Message</label>
@@ -164,6 +393,49 @@
                     el.style.transition = '';
                 });
             });
+        });
+    })();
+
+    // ── Phone picker: combine country code + local number into hidden field ──
+    (function () {
+        var codeSelect  = document.getElementById('countryCodeSelect');
+        var localInput  = document.getElementById('localPhone');
+        var hiddenPhone = document.getElementById('Contact_Phone');
+        var form        = localInput ? localInput.closest('form') : null;
+
+        if (!codeSelect || !localInput || !hiddenPhone || !form) return;
+
+        // Auto-format as Sri Lankan style: 77 XXX XXXX (works for any country)
+        function formatLocal(raw) {
+            var d = raw.replace(/\D/g, '').slice(0, 9); // max 9 raw digits
+            if (d.length <= 2)  return d;
+            if (d.length <= 5)  return d.slice(0,2) + ' ' + d.slice(2);
+            return d.slice(0,2) + ' ' + d.slice(2,5) + ' ' + d.slice(5);
+        }
+
+        localInput.addEventListener('input', function () {
+            var pos = this.selectionStart;
+            var prev = this.value.length;
+            this.value = formatLocal(this.value);
+            // Restore caret roughly
+            var diff = this.value.length - prev;
+            this.setSelectionRange(pos + diff, pos + diff);
+        });
+
+        form.addEventListener('submit', function (e) {
+            var code  = codeSelect.value;                        // e.g. "+94"
+            var local = localInput.value.replace(/\D/g, '');    // digits only
+            local = local.replace(/^0+/, '');                   // strip leading 0
+
+            if (!local) {
+                e.preventDefault();
+                localInput.setCustomValidity('Please enter your phone number.');
+                localInput.reportValidity();
+                return;
+            }
+
+            localInput.setCustomValidity('');
+            hiddenPhone.value = code + local;  // e.g. "+94712345678"
         });
     })();
 </script>
