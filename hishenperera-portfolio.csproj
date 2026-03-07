@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="MailKit" Version="4.14.1" />
+    <PackageReference Include="Resend" Version="0.2.1" />
   </ItemGroup>
 
 </Project>

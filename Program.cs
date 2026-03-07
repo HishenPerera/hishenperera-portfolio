@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<ProjectService>();
+builder.Services.AddHttpClient(); // for Resend email API
 
 var app = builder.Build();
 
