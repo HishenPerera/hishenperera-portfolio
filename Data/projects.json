@@ -1,9 +1,9 @@
 [
   {
     "ProjectId": 0,
-    "ProjectName": "ReconApp",
-    "ProjectImg": "https://lrcommunicationdesign.com/resources/interface-design/RapidRecon-web_app-smartphone-UI_visual_design-HTML5-CSS.jpg",
-    "ProjectLink": "https://reconmobileapplication.com/"
+    "ProjectName": "Crypto Forecast App",
+    "ProjectImg": "../assets/crypto.png",
+    "ProjectLink": "https://cryptoforecast.up.railway.app/"
   },
   {
     "ProjectId": 1,
